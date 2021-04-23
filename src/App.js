@@ -9,7 +9,7 @@ function App() {
       <HashRouter>
         <Switch>
           <Route exact path='/' component={HomePageComponent} />
-          <Route exact path='category/:name' component={BookDetailsComponent} />
+          <Route exact path='/category/:name' component={BookDetailsComponent} />
         </Switch>
       </HashRouter>
     </div>
