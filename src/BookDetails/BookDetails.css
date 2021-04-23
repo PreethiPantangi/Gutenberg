@@ -17,3 +17,7 @@ span {
     font-family: 'Montserrat-Regular' !important;
     font-size: 20px; 
 }
+
+.booksList {
+    padding-top: 10px;
+}

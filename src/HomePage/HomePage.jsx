@@ -54,13 +54,15 @@ const HomePageComponent = () => {
                     <Grid container spacing={3}>
                         {categories.map(category =>
                             <Grid item xs={12} sm={6} key={category.id} >
-                                <Paper className={classes.paper}>
-                                    <img className="category_image" src={category.categoryImage} alt={category.categoryImage} style={{ width: 50, height: 35 }} />
-                                    <p className="category_name">{category.categoryName.toUpperCase()}</p>
-                                    <Link to={`/category/${category.categoryName}`} >
+                                <Link to={`/category/${category.categoryName}`} >
+                                    <Paper className={classes.paper}>
+                                        <img className="category_image" src={category.categoryImage} alt={category.categoryImage} style={{ width: 50, height: 35 }} />
+                                        <p className="category_name">{category.categoryName.toUpperCase()}</p>
+
                                         <img className="category_next" src={Next} alt='next' style={{ width: 25, height: 25 }} />
-                                    </Link>
-                                </Paper>
+
+                                    </Paper>
+                                </Link>
                             </Grid>
                         )}
                     </Grid>
