@@ -123,9 +123,10 @@ function BookDetailsComponent(props) {
         if (load) {
             axios.get(getBooksByGenreUrl(category, pageNum))
                 .then(res => {
-                    setBooksList(booksList => [...booksList, ...res.data.results]);
-                    setFilteredList(booksList => [...booksList, ...res.data.results])
-                    setPageNum(pageNum => pageNum + 1)
+                    setBooksList([...booksList, ...res.data.results]);
+                    setFilteredList([...booksList, ...res.data.results])
+                    console.log(pageNum);
+                    setPageNum(pageNum + 1)
                     setLoadMore(false);
                     ssetIsLoading(false);
                 })
