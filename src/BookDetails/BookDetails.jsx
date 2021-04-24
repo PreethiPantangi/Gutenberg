@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { getBooksByGenreUrl, getBooksBySearchUrl } from '../common/endpoints'
 import Back from '../assets/Back.svg'
@@ -124,10 +123,9 @@ function BookDetailsComponent(props) {
         if (load) {
             axios.get(getBooksByGenreUrl(category, pageNum))
                 .then(res => {
-                    setBooksList([...booksList, ...res.data.results]);
-                    setFilteredList([...booksList, ...res.data.results])
-                    console.log(pageNum);
-                    setPageNum(pageNum + 1)
+                    setBooksList(booksList => [...booksList, ...res.data.results]);
+                    setFilteredList(booksList => [...booksList, ...res.data.results])
+                    setPageNum(pageNum => pageNum + 1)
                     setLoadMore(false);
                     ssetIsLoading(false);
                 })
