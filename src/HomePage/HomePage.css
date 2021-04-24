@@ -1,5 +1,5 @@
 .homepage_component {
-    background-color: #F8F7FF;;
+    background-color: #F8F7FF;
 }
 
 .homepage_component_genred {
@@ -7,7 +7,7 @@
 }
 
 .homepage_component_container {
-    padding: 1%;
+    padding: 5%;
 }
 
 .category_image, .category_name {
@@ -22,4 +22,10 @@
     font-family: 'Montserrat-Semibold';
     font-size: 20px;   
     padding-top: 4px;
+}
+
+@media only screen and (max-width: 540px) {
+    .homepage_component_container {
+        padding: 5%;
+    }
 }

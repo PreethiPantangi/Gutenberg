@@ -24,7 +24,7 @@ span {
 
 .search {
     height: 40px !important;
-    width: 90vw;
+    width: 80vw;
 }
 
 input[type="text"]
@@ -62,4 +62,35 @@ input[type="text"]
     height: 40px !important;
     width: 70vw;
 }
+}
+
+.showslist {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+
+.show_card {
+    cursor: pointer;
+    margin: 1%;
+}
+
+.showslist_image {
+    padding: 3%;
+    border-radius: 20px;
+}
+
+.showlist_name {
+    flex-wrap: wrap;
+    width: 200px;
+    text-align: left;
+    word-break: break-all;
+    font-family: 'Montserrat-Semibold';
+    font-size: 12px;
+}
+
+.author {
+    font-family: 'Montserrat-Regular';
+    font-size: 12px;
 }

@@ -53,7 +53,8 @@ function BookDetailsComponent(props) {
     const [searchWord, setSearchWord] = useState('');
     const [loadMore, setLoadMore] = useState(true);
     // const [isSearchClicked, setIsSearchClicked] = useState(false);
-    const [isLoading, ssetIsLoading] = useState(false)
+    const [isLoading, ssetIsLoading] = useState(false);
+    const [error, setError] = useState('')
 
     const params = useParams();
     let category = params.name;
@@ -131,7 +132,9 @@ function BookDetailsComponent(props) {
                     ssetIsLoading(false);
                 })
                 .catch(err => {
-                    console.log(err.response);
+                    setLoadMore(false);
+                    setError(err.response.status)
+                    // ssetIsLoading(false)
                 })
         }
     }, [loadMore]);
@@ -173,18 +176,16 @@ function BookDetailsComponent(props) {
 
 
     return (
-        <ul id='list'>
-            <div className="bookdetails_component" >
+        <React.Fragment>
+            <Grid item xs={12} style={{ padding: '3%' }}>
                 <GridList
                     cols={colCount}
-                    cellHeight={240}
+                    cellHeight={100}
                     spacing={5}
-                    className={classes.gridList}
                 >
                     <GridListTile
                         key="Subheader"
                         cols={colCount}
-                        style={{ height: "auto" }}
                     >
                         <ListSubheader component="div">
                             <img src={Back} onClick={goBack} style={{ width: "50", top: '10', cursor: 'pointer' }} alt="" />
@@ -206,27 +207,28 @@ function BookDetailsComponent(props) {
                             </div>
                         </div>
                     </GridListTile>
-                    {filteredList && filteredList.map(tile => (
-                        <Grid item xs={12} sm={3} key={tile.id} >
-                            <GridListTile
-                                className="booksList"
-                                onClick={() => onClickGridItem(tile.id)}
-                                className={classes.gridListItem}
-                                key={tile.id}
-                            >
-                                <img src={tile.formats['image/jpeg']} alt={tile.title} />
-                                <GridListTileBar
-                                    title={tile.title}
-                                    subtitle={tile.authors[0] && tile.authors[0].name && <span>by: {tile.authors[0].name}</span>}
-                                />
-                            </GridListTile>
-                        </Grid>
-                    ))}
-                    {filteredList.length === 0 && !isLoading ? <div>There are no books with the specified name!</div> : null}
-                    {isLoading ? <div><CircularProgress /> </div> : null}
                 </GridList>
-            </div>
-        </ul>
+            </Grid>
+            <ul id='list'>
+                <Grid item xs={12}>
+                    <div className="showslist" >
+                        {filteredList && filteredList.map(book =>
+                            <div key={book.id} className="show_card" onClick={() => onClickGridItem(book.id)} >
+                                <img className="showslist_image" src={book.formats['image/jpeg']} alt={book.title} style={{ width: 200, height: 200 }} />
+                                <p className="showlist_name" >{book.title.length > 50 ? <React.Fragment>{book.title.toUpperCase().slice(0, 50)}...</React.Fragment> : book.title.toUpperCase()}</p>
+                                <p className="author" >{book.authors && book.authors[0] && book.authors[0]['name']}</p>
+                            </div>
+                        )}
+                        <div>
+                            {filteredList.length === 0 && searchWord.length > 0 ? <div>There are no books with the specified name!</div> : null}
+                        </div>
+                    </div>
+                    <div style={{ textAlign: 'center' }} >
+                        {isLoading && error === '' ? <div><CircularProgress /> </div> : null}
+                    </div>
+                </Grid>
+            </ul>
+        </React.Fragment>
     );
 }
 
