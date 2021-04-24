@@ -1,3 +1,4 @@
+import './BookDetails.css'
 import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -6,19 +7,13 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { getBooksByGenreUrl, getBooksBySearchUrl } from '../common/endpoints'
 import Back from '../assets/Back.svg'
-import SearchIcon from "@material-ui/icons/Search";
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-        overflow: "hidden",
-        backgroundColor: theme.palette.background.paper
-    },
+
     gridList: {
         width: "100%",
         height: "100%"
@@ -28,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         cursor: "pointer"
     },
     search: {
-        display: 'flex'
+        display: 'flex',
     },
 }));
 
@@ -49,6 +44,7 @@ const getColLength = () => {
 };
 
 function BookDetailsComponent(props) {
+
     const classes = useStyles();
     const colCount = getColLength();
     let [pageNum, setPageNum] = useState(1);
@@ -116,6 +112,12 @@ function BookDetailsComponent(props) {
         })
     }
 
+    const clearSearch = () => {
+        setSearchWord('');
+        setBooksList([])
+        getData(category, true)
+    }
+
     const getData = useCallback((category, load) => {
         ssetIsLoading(true)
         if (load) {
@@ -171,9 +173,8 @@ function BookDetailsComponent(props) {
 
 
     return (
-
         <ul id='list'>
-            <div className={classes.root} >
+            <div className="bookdetails_component" >
                 <GridList
                     cols={colCount}
                     cellHeight={240}
@@ -193,33 +194,35 @@ function BookDetailsComponent(props) {
                             </span>
                         </ListSubheader>
                         <div className={classes.search}>
-                            <div className={classes.searchIcon}  >
-                                <SearchIcon />
-                            </div>
-                            <div>
-                                <input placeholder="Search Books…"
+                            <div className="input-container">
+                                <i className="fa fa-search icon"></i>
+                                <input
+                                    type="text" className="search" placeholder="Search Books…"
                                     value={searchWord}
                                     onChange={(e) => { setSearchWord(e.target.value) }}
                                     onKeyDown={getBooksBySearch}
                                 />
+                                {searchWord !== '' ? <i className="fa fa-remove icon icon-remove" onClick={clearSearch} ></i> : null}
                             </div>
                         </div>
                     </GridListTile>
                     {filteredList && filteredList.map(tile => (
-                        <GridListTile
-                            className="booksList"
-                            onClick={() => onClickGridItem(tile.id)}
-                            className={classes.gridListItem}
-                            key={tile.id}
-                        >
-                            <img src={tile.formats['image/jpeg']} alt={tile.title} />
-                            <GridListTileBar
-                                title={tile.title}
-                                subtitle={tile.authors[0] && tile.authors[0].name && <span>by: {tile.authors[0].name}</span>}
-                            />
-                        </GridListTile>
+                        <Grid item xs={12} sm={3} key={tile.id} >
+                            <GridListTile
+                                className="booksList"
+                                onClick={() => onClickGridItem(tile.id)}
+                                className={classes.gridListItem}
+                                key={tile.id}
+                            >
+                                <img src={tile.formats['image/jpeg']} alt={tile.title} />
+                                <GridListTileBar
+                                    title={tile.title}
+                                    subtitle={tile.authors[0] && tile.authors[0].name && <span>by: {tile.authors[0].name}</span>}
+                                />
+                            </GridListTile>
+                        </Grid>
                     ))}
-                    {filteredList.length && !isLoading === 0 ? <div>There are no books with the specified name!</div> : null}
+                    {filteredList.length === 0 && !isLoading ? <div>There are no books with the specified name!</div> : null}
                     {isLoading ? <div><CircularProgress /> </div> : null}
                 </GridList>
             </div>

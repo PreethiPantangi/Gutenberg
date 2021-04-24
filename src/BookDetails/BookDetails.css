@@ -21,3 +21,45 @@ span {
 .booksList {
     padding-top: 10px;
 }
+
+.search {
+    height: 40px !important;
+    width: 90vw;
+}
+
+input[type="text"]
+{
+    font-size:20px;
+    font-family: 'Montserrat-Regular';
+}
+
+.icon {
+    padding: 10px;
+    background: rgb(168, 183, 195);
+    color: white;
+    min-width: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .input-container {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+.icon-remove {
+    cursor: pointer;
+}
+
+.bookdetails_component {
+    padding: 1%;
+}
+
+@media only screen and (max-width: 540px) {
+.search {
+    height: 40px !important;
+    width: 70vw;
+}
+}
