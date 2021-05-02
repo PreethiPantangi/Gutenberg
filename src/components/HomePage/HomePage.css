@@ -1,0 +1,23 @@
+.homepage_component {
+    background-color: #F8F7FF;
+}
+
+.homepage_component_container {
+    padding: 2%;
+}
+
+.hpc_header {
+    font-size: 48px;
+    color: #5E56E7;
+    font-family: 'Montserrat-SemiBold';
+}
+
+.hpc_subtitle {
+    font-family: 'Montserrat-SemiBold';
+}
+
+@media only screen and (max-width: 540px) {
+    .homepage_component_container {
+        padding: 5%;
+    }
+}

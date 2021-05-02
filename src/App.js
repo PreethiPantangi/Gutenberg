@@ -1,15 +1,15 @@
 import './App.css';
-import { HashRouter, Route, Switch } from 'react-router-dom';
-import HomePageComponent from './HomePage/HomePage'
-import BookDetailsComponent from './BookDetails/BookDetails'
+import { HashRouter, Switch, Route } from 'react-router-dom';
+import HomePageComponent from './components/HomePage/HomePage'
+import BookDetailsComponent from './components/BookDetails/BookDetails'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <HashRouter>
         <Switch>
-          <Route exact path='/' component={HomePageComponent} />
-          <Route exact path='/category/:name' component={BookDetailsComponent} />
+          <Route exact path="/" component={HomePageComponent} />
+          <Route exact path="/category/:name" component={BookDetailsComponent} />
         </Switch>
       </HashRouter>
     </div>

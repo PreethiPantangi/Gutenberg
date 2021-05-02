@@ -1,7 +1,6 @@
 const baseUrl = 'http://skunkworks.ignitesol.com:8000/books/'
 
 export const getBooksByGenreUrl = (genre, pageNum) => {
-    // return `${baseUrl}books/?topic=${genre}&page=${pageNum}`
     return `${baseUrl}?mime_type=image%2Fjpeg&page=${pageNum}&topic=${genre}`
 }
 

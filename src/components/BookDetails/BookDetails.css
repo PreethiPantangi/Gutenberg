@@ -1,0 +1,10 @@
+.book_details_component {
+    padding: 2%;
+    /* width: 50vw;
+    display: flex;
+    margin: 0 auto; */
+}
+
+.bdc_header {
+    display: flex;
+}
