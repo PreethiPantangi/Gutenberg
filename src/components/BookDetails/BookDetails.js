@@ -57,6 +57,8 @@ const BookDetailsComponent = () => {
     const [books, setBooks] = useState([]);
     const [filteredBooks, setFilteredBooks] = useState([]);
     const [searchWord, setSearchWord] = useState('');
+    const [next, setNext] = useState('');
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
 
     const goBack = () => {
         history.goBack()
@@ -64,9 +66,6 @@ const BookDetailsComponent = () => {
 
     const handleChange = (event, value) => {
         fetchBooks(value);
-        if (value === pageNum) {
-            setPageNum(pageNum => pageNum + 1)
-        }
         setSearchWord('')
         setPage(value);
     };
@@ -75,7 +74,7 @@ const BookDetailsComponent = () => {
         setIsLoading(true)
         axios.get(getBooksByGenreUrl(genre, pageNumber))
             .then(res => {
-                const { results } = res.data;
+                const { results, next } = res.data;
                 const booksResp = results
                     .map(({ id, formats, title, authors }) => ({
                         id,
@@ -84,6 +83,14 @@ const BookDetailsComponent = () => {
                         title,
                         author: authors[0] && authors[0].name
                     }))
+                if (isInitialLoading && next !== null) {
+                    setPageNum(pageNum + 1)
+                    setIsInitialLoading(false)
+                }
+                if (next !== null) {
+                    setPageNum(pageNum + 1)
+                }
+                setNext(next)
                 setBooks([...booksResp])
                 setFilteredBooks([...booksResp])
                 setIsLoading(false)
@@ -103,7 +110,7 @@ const BookDetailsComponent = () => {
     const fetchBooksBySearch = () => {
         setIsLoading(true)
         axios.get(getBooksBySearchUrl(searchWord, genre)).then(res => {
-            const { results } = res.data;
+            const { results, next } = res.data;
             const booksResp = results
                 .map(({ id, formats, title, authors }) => ({
                     id,
@@ -112,6 +119,7 @@ const BookDetailsComponent = () => {
                     title,
                     author: authors[0] && authors[0].name
                 }))
+            setNext(next)
             setFilteredBooks([...booksResp])
             setIsLoading(false)
         }).catch(err => {
@@ -145,7 +153,7 @@ const BookDetailsComponent = () => {
 
     useEffect(() => {
         fetchBooks(pageNum)
-        setPageNum(pageNum => pageNum + 1)
+        // setIsInitialLoading(true)
     }, [])
 
     return (
